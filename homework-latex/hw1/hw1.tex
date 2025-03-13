@@ -1,0 +1,40 @@
+\section{Homework 1}
+
+\subsection{问题1}
+
+(a)
+\begin{itemize}
+    \item 状态: 无人机所处的位置
+    \item 初始状态: 无人机的起点$S$
+    \item 目标状态: 无人机的目标点$E$
+    \item 行动: 无人机的横向或纵向移动
+    \item 代价: 单个行动的代价为$1$, 动作序列的代价为所有动作代价之和.
+\end{itemize}
+
+(b)
+\begin{itemize}
+    \item 状态: 三个机关的状态$(S_1,S_2,S_3)$
+    \item 初始状态: 初始状态$(\text{未激活},\text{激活},\text{未激活})$.
+    \item 目标状态: $(\text{激活},\text{激活},\text{激活})$,$(\text{未激活},\text
+    {未激活},\text{未激活})$
+    \item 行动: 切换一个机关的状态
+    \item 代价: 单个行动的代价为$1$, 动作序列的代价为所有动作代价之和.
+\end{itemize}
+
+\subsection{问题4}
+
+(1)对于一致的$h(n)$, 沿任何路径的$f(n)$都是非减的, 因为对于任意$n$的后续节点$n'$有
+\begin{align*}
+    f(n')-f(n)=g(n')-g(n)+h(n')-h(n) \ge -c(n,n')+g(n')-g(n)=0
+\end{align*}
+
+因此对于到任意节点$n$的最优路径, 其前驱节点的$f$值均小于$f(n)$, 必然会在$n$之前被扩展,
+因此到达$n$的最短路径已被发现, 即此时A*算法为最优.
+
+(2)这一结论不正确. 深度优先搜索与节点之间的代价无关, 而A*与节点之间的代价有关. 因此对于
+相同状态集的问题, 不存在一个$h$函数使得对于任意的代价函数, A*总能给出和深度优先相等的搜
+索结果.
+
+(3)$f(n)=O(g(n))$表明$\exists N_0>0, \exists c>0, \forall n>N_0,f(n)<cg(n)$, 因此
+有$\log f(n) < \log c + \log g(n)=\log g(n)[1+\log c]$, 令$c'=1+\log c$, 则:$\log
+f(n)<c'\log g(n)$, 即$\log f(n)=O(\log g(n))$.

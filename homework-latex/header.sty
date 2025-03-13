@@ -1,0 +1,43 @@
+\ProvidesPackage{header}
+% \CTEXsetup[format={\Large\bfseries}]{section}
+
+\usepackage{geometry}
+\usepackage{multirow, multicol}
+\usepackage{float}
+\usepackage{zhnumber} % 中文计数器
+\usepackage{caption}
+\usepackage{hyperref} % 交叉引用，目录使用超链接
+\usepackage{amsmath, amsfonts} % 数学公式及字体
+\usepackage{subfiles} % 在不断页的情况下引入多文件管理
+\usepackage{graphicx, subfigure} % 插入图片, 允许subfigure
+\usepackage{siunitx} % 更优雅的带单位数字输入
+\usepackage{tikz, circuitikz} % 电路图绘制
+
+% 由 https://zhuanlan.zhihu.com/p/381769429 摘抄的配置
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241, 241, 255}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{shaded}\stepcounter{problemname}\par\noindent\textbf{题目\arabic{problemname}. }}{\end{shaded}\par}
+\newenvironment{solution}{\par\noindent\textbf{解答. }}{\par}
+\newenvironment{proof}{\par\noindent\textbf{证明. }}{\par}
+\newenvironment{note}{\par\noindent\textbf{题目\arabic{problemname}的注记. }}{\par}
+
+\newcommand{\name}{Your Name}
+\newcommand{\studentID}{Your student ID}
+\newcommand{\class}{Your class}
+\newcommand{\department}{Your department}
+\newcommand{\university}{清华大学}
+\newcommand{\email}{Your email}
+\newcommand{\course}{人工智能原理}
+
+\title{\course 作业}
+\author{\name\thanks{学号:\studentID, E-mail:\email}}
+\date{\today}
+
+\newcounter{task}[subsubsection]
+
+\renewcommand\thetask{\zhnum{task}}
+\newcommand{\task}[1]{
+    \stepcounter{task}
+    \noindent \textbf{\thetask. #1}
+}
