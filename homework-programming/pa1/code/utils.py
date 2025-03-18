@@ -1,6 +1,8 @@
 from collections import deque
 
+# from queue import PriorityQueue
 import sortedcontainers
+import time
 
 
 class Queue(object):
@@ -11,8 +13,7 @@ class Queue(object):
         self._items.append(item)
 
     def pop(self):
-        return self._items.popleft() \
-            if not self.empty() else None
+        return self._items.popleft() if not self.empty() else None
 
     def empty(self):
         return len(self._items) == 0
@@ -22,6 +23,9 @@ class Queue(object):
 
     def top(self):
         return self._items[0]
+    
+    def include(self, item):
+        return item in self._items
 
 
 class Stack(object):
@@ -36,6 +40,9 @@ class Stack(object):
 
     def empty(self):
         return len(self) == 0
+
+    def include(self, item):
+        return item in self._items
 
     def __len__(self):
         return len(self._items)
@@ -71,7 +78,7 @@ class PriorityQueue(object):
 class Set(object):
     def __init__(self, ip_set=None):
         self._items = set()
-        if ip_set != None:
+        if ip_set is not None:
             self._items = ip_set
 
     def add(self, item):
@@ -84,7 +91,7 @@ class Set(object):
         return self._items.pop()
 
     def include(self, item):
-        return (item in self._items)
+        return item in self._items
 
     def find_by_state(self, item):
         for a_node in self._items:
@@ -112,3 +119,11 @@ class Dict(object):
 
     def find(self, key):
         return self._items[key] if key in self._items else None
+
+class Stopwatch():
+    def __init__(self):
+        self.begin = time.time()
+    
+    def elapsed_time(self):
+        return time.time() - self.begin
+    

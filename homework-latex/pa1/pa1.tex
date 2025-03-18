@@ -1,0 +1,44 @@
+\section{编程作业1}
+
+\subsection{核心代码解释}
+
+\subsubsection{搜索代码解释}
+
+\lstinputlisting[
+    style = Python,
+    caption = {\bf 有信息搜索代码},
+    label = {code:withinfo},
+    firstline = 197,
+    lastline = 226
+]{../../homework-programming/pa1/code/problem.py}
+
+核心代码为如\ref{code:withinfo}所示的有信息搜索代码, 特殊之处在于将\verb|open_list|
+分成两份存储, 一份使用\verb|utils.PriorityQueue|用于方便的找到下一个节点, 另一份使用
+\verb|utils.Set|保证\verb|in|操作的效率. 此外则是一般地搜索: 若开集非空, 对于
+\verb|open_list|顶的每一个子节点, 若其是终点则报告, 否则若这一节点未访问过, 则
+将其加入\verb|open_list|. 栈顶加入\verb|close_list|. 若直到\verb|open_list|为空仍
+未发现目标节点, 则报告无解.
+
+对于其中优先级的计算和比较则隐式地包含在了\verb|Node|类型的初始化和\verb|__lt__()|
+方法中.
+
+无信息搜索与有信息搜索十分类似, 不过将\verb|open_list|的类型由
+\verb|utils.PriorityQueue|变为了\verb|utils.Queue|, 得到BFS算法.
+
+\subsection{四种求解方法的比较}
+
+\begin{tabular}{*5{|c}|}
+    \hline 
+    & 无信息搜索 & \makecell{有信息搜索\\\#1} & \makecell{有信息搜索\\\#2} & \makecell{有信息搜索\\\#3} \\\hline 
+    启发函数实现 & N/A & 常函数0 & \makecell{$16$-匹配\\的数字个数} & \makecell{所有棋子(不含敖丙)到\\其目标位置曼哈顿距离\\之和 / 一个系数$\lambda$} \\\hline
+    能否发现最优解 & \multicolumn{3}{c|}{能(长度19的解)} & \makecell{对于某些$\lambda$,\\可以找到最优解} \\\hline
+    \makecell{报告时开闭表\\节点数和} & $296,456$ & $296,456$ & $25,585$ & $1,088(\lambda=1.095)$  \\\hline 
+    用时/$\mathrm{s}$ & $32.55$ & $36.02$ & $3.27$ & $0.15(\lambda=1.095)$ \\\hline
+\end{tabular}
+
+其中有信息搜索\#1和无信息搜索是一样的, 因为显然当$h=0$时优先级永远等于从起始点出发的代
+价, 此时退化为BFS. 对于另外两个启发函数, 其由于对节点有一定的估计所以效果更好; 启发函数
+\#3对于不在目标位置的节点额外利用了曼哈顿距离的信息, 因此估计更加准确. 常系数$\lambda$
+会影响启发函数和从起始点出发的代价之间的权重, 实际测试得知当$\lambda\in[1.9091,1.1)$
+之间的启发函数效果最好, (左边界是估计值, 右边界在$10^{-10}$的量级下是准确的) 否则既无
+法给出准确结果, 搜索节点数也会变多.
