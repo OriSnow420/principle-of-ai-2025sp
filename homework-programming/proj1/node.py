@@ -1,12 +1,14 @@
 """Contains class Node interface"""
 
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Callable
 from state import IState
 
 
 class INode(ABC):
     """Node Interface, which is a state with cost on a searching tree."""
+
+    _h_function: Callable[[IState], int]
 
     @abstractmethod
     def get_state(self) -> IState:
@@ -42,5 +44,7 @@ class INode(ABC):
 
     def __lt__(self, other):
         if isinstance(other, INode):
-            return self.get_cost() < other.get_cost()
+            return self.get_cost() + self._h_function(
+                self.get_state()
+            ) < other.get_cost() + other._h_function(other.get_state())
         raise TypeError("Less than only compares between INodes")

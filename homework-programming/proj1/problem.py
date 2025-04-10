@@ -11,8 +11,8 @@ class IProblem(ABC):
     """Problem Abstract Class"""
 
     @abstractmethod
-    def init_state(self) -> IState:
-        """Returns the initial state"""
+    def init_node(self) -> INode:
+        """Returns the initial node"""
 
     @abstractmethod
     def is_goal_state(self, state: IState) -> bool:
