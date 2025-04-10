@@ -310,3 +310,8 @@ TSWLatexianTemp*
 
 # Python cache
 __pycache__
+
+# pyinstaller cache
+build
+dist
+*.spec
