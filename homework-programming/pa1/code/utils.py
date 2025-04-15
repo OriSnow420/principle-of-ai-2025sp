@@ -1,8 +1,7 @@
 from collections import deque
-
-# from queue import PriorityQueue
-import sortedcontainers
 import time
+import sortedcontainers
+
 
 
 class Queue(object):
@@ -123,7 +122,6 @@ class Dict(object):
 class Stopwatch():
     def __init__(self):
         self.begin = time.time()
-    
+
     def elapsed_time(self):
         return time.time() - self.begin
-    
