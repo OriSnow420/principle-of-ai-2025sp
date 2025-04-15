@@ -1,0 +1,38 @@
+\section{Homework 4}
+
+\subsection{问题2}
+
+令$n$维向量$Y=\left(\begin{array}{c}
+    y_1 \\ \vdots \\ y_n
+\end{array}\right)$, $\hat{Y}=\left(\begin{array}{c}
+    \hat{y_1} \\ \vdots \\ \hat{y_n}
+\end{array}\right)$, $\bar{Y}=\left(\begin{array}{c}
+    \bar{y} \\ \cdots \\ \bar{y}
+\end{array}\right)$. 因此要证明的结论等价于$\hat{Y}-\bar{Y}$和$\hat{Y}-Y$正交, 其
+数量积应当等于$0$:
+\begin{equation*}
+    S=\sum_{i=1}^{n}(\hat{y}_i-\bar{y})(\hat{y}_i-y_i)=0
+\end{equation*}
+最小二乘要求残差的平方和
+\begin{align*}
+    F=\sum_{i=1}^{n}(y_i-\hat{w}x_i-b)^2
+\end{align*}
+最小, 因此$(\hat{w},b)$应当取得其极值点, 因此有:
+
+\begin{equation*}
+    \left\{
+        \begin{array}{c}
+            \displaystyle \frac{\partial F}{\partial \hat{w}}=\sum_{i=1}^{n}-2x_i(y_i-\hat{w}x_i-b)=0 \\
+            \displaystyle \frac{\partial F}{\partial b}=\sum_{i=1}^{n}-2(y_i-\hat{w}x-b)=0
+        \end{array}
+    \right.
+\end{equation*}
+比较$S$和偏导数的表达式, 有$\displaystyle S=\frac{1}{2}(\hat{w}\frac{\partial F}
+{\partial \hat{w}}+b\frac{\partial F}{\partial b})=0$.
+
+\subsection{问题4}
+
+概率之和$\displaystyle\sum_{k=1}^{K}P(Y=j)=(1/Z)e^{\beta_kx}\Rightarrow\sum_{k=1}^{K}e^{\beta_kx}=Z$, 因此
+\begin{equation*}
+    P(Y=k)=\frac{e^{\beta_kx}}{Z}=\frac{e^{\beta_kx}}{\sum_{j=1}^{K}e^{\beta_jx}}
+\end{equation*}
