@@ -1,0 +1,49 @@
+\section{Project 2 - 垃圾分类}
+
+\subsection{深度学习方法设计}
+
+\task{设计一个卷积神经网络模型解决该分类问题}
+
+最开始设计的卷积神经网络的结构为:
+
+\begin{enumerate}
+    \item 卷积层, 3通道输入, 64通道输出; ReLU非线性; 最大池化
+    \item 卷积层, 64通道输入, 128通道输出; ReLU非线性; 最大池化
+    \item 卷积层, 128通道输入, 256通道输出; ReLU非线性; 将特征池化至7*7尺寸
+    \item 全连接层, 256*7*7输入, 512输出; ReLU非线性
+    \item 全连接层(输出), 512输入, 10输出.
+\end{enumerate}
+
+损失函数采用\verb|nn.CrossEntropyLoss()|, 即交叉熵损失; 优化器选用\verb|optim.Adam|, 学习率$0.001$. 训练过程中记录模型在训练集和验证集上的loss和acc值. 记录的数据如图\ref{fig:bad-model}所示. 最终采用测量模型在测试集上的acc值的方法来衡量模型; 训练得到的最终模型在测试集上的acc为$61.54\%$
+
+\begin{figure*}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../homework-programming/proj2/result/bad_model.png}
+    \caption{简单模型的Loss和Acc值随训练进程变化}\label{fig:bad-model}
+\end{figure*}
+
+\subsection{模型优化}
+
+设计的简单模型能够做到$61.54\%$的准确率, 相比完全随机猜测时的$10\%$准确率来说有了一些提升; 但可以注意到在Acc曲线中, 在验证集上的准确率明显小于训练集上的准确率, 说明模型出现了一些过拟合现象; 此外, 对于验证集, 随着训练进程进行, 其loss不降反升, 更说明模型的泛化能力不足. 因此为了改进模型, 采用了以下方法:
+
+\begin{enumerate}
+    \item 导入测试集时, 对测试集采用了随机裁剪, 随机翻转, 随机旋转, 防止测试集中图片物品的摆放方式的规律性干扰了模型
+    \item 在模型中的每个卷积层的ReLU函数之后, 对Batch进行标准化, 以提升泛化能力.
+    \item 在模型的两个全连接层增加了\verb|Dropout|.
+\end{enumerate}
+
+改进后的模型的各个曲线如图\ref{fig:improved-model}所示.
+
+\begin{figure*}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../../homework-programming/proj2/result/improved_model.png}
+    \caption{改进后模型的Loss和Acc值随训练进程变化}\label{fig:improved-model}
+\end{figure*}
+
+从图中可看出, 改进后的模型的在验证集上的准确率上升. 而实际表现确实如此: 其在测试集上的准确率为$86.99\%$. 并且在测试集上的准确率略小于验证集, 说明过拟合的情况极大改善, 且该模型还有随着训练继续进行而改善的区间, 但可能由于学习率较高, acc在训练最后的波动较大, 如果继续改善可能需要降低学习率. 由于算力限制, 此结论并未被验证.
+
+\subsection{其他讨论}
+
+关于Loss的选择: 一开始选用的Loss是\verb|nn.NLLLoss()|, 但得到的loss曲线是发散的, acc也不如人意. NLLLoss采用的算法实际上是交叉熵计算的最后一步, 在将预测结果丢入\verb|NLLLoss()|中之前应当先进行Softmax+Log操作. 这实际上就是\verb|nn.CrossEntropyLoss()|. 改用正确的Loss后, loss的大概范围变为$0$\textasciitilde$1.8$, 准确率也有上升.
+
+问题展望: 这一问题的结果说明卷积神经网络能够较好地胜任图像识别的工作, 但其表现十分依赖对数据集的预处理和对模型结构的优化. 此外, 数据集中不仅存在从真实世界直接得到的原始图片, 也存在白底或透明底的物品图片, 若要处理现实生活中的垃圾分类情况, 可能需要对后者有较好的支持.
