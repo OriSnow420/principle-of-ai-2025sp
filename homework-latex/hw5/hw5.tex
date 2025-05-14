@@ -1,0 +1,53 @@
+\section{Homework 5}
+
+\subsection{问题1}
+
+(a) 经过第一层: $\bm y_1=\cos(\bm W_1\cdot \bm x) + b_1=\left(\begin{array}{c}
+    0.8628 \\ 0.8525 \\ 0.8628 \\ 0.8628
+\end{array}\right)$
+
+第二层: $\bm y_2 = \cos(\bm W_2 \cdot \bm y_1) + b_2=\left(\begin{array}{c}
+    0.4519 \\ 0.4528 \\ 0.4519
+\end{array}\right)$
+
+输出层: $\bm{\hat y} = \sigma(W_3 \cdot y_2 + b_3)=0.6368$.
+
+(b) 均方误差$E=\dfrac{1}{2}(y-\hat y)^2$. 令$z_3=\bm W_3\cdot \bm y_2$, 有关系式$\bm{\hat y} = \sigma(z_3) $.因此$$\frac{\partial E}{\partial W_3}=\frac{\partial E}{\partial \hat y}
+\frac{\partial \hat y}{\partial z_3}\frac{\partial z_3}{\partial W_3}$$
+其中$\dfrac{\partial E}{\partial \hat y}=-(y-\hat y)=-(0.95-0.6368)=-0.3132$, $\dfrac{\partial \hat y}{\partial z_3}=\hat y (1-\hat y)
+=0.2313$, $\dfrac{\partial z_3}{\partial W_3}=\bm y_2$, 因此$\nabla_{W_3}E=\bm y_2\cdot(-0.3132*0.2313)=(-0.03274\ -0.03280\ -0.03274)$.
+
+(c) $W_3^{\text{(new)}}=W_3^{\text{(old)}}-\eta\dfrac{\partial E}{\partial W_3}=[0.20327\ 0.20328\ 0.40327]$.
+
+\subsection{问题3}
+
+初始的输出为输入值$\left[\begin{array}{ccc}
+    1 & 1 & 2 \\ 1 & 1 & 2 \\ 1 & 1 & 2
+\end{array}\right]$与$H_0=\left[\begin{array}{cc}
+    0.2 & 0.2 \\ 0.3 & 0.3
+\end{array}\right]$的卷积, 结果为$\left[\begin{array}{cc}
+    1.0 & 1.5 \\ 1.0 & 1.5
+\end{array}\right]$.
+
+损失函数为$L=\dfrac{1}{2}\displaystyle\sum_{i,j}(y_{ij}-d_{ij})^2$, 因此$\dfrac{\partial L}{\partial H_{ij}}=\displaystyle\sum_{a,b}
+(y_{ab}-d_{ab})\cdot\dfrac{\partial y_{ab}}{\partial H_{ij}}$. 其中$\dfrac{\partial y_{ab}}{\partial H_{ij}}$为输入矩阵中第$(i+a-1,b+j-1)$
+处的值. 代入数值计算得到:
+\begin{equation*}
+    \nabla L=\left[
+        \begin{array}{cc}
+            \frac{\partial L}{\partial H_{11}} & \frac{\partial L}{\partial H_{12}} \\
+            \frac{\partial L}{\partial H_{21}} & \frac{\partial L}{\partial H_{22}}
+        \end{array}
+    \right]
+    =
+    \left[
+        \begin{array}{cc}
+            0.0 & 1.0 \\ 0.0 & 1.0
+        \end{array}
+    \right]
+\end{equation*}
+
+因此$H_m^\text{(new)}=H_m^\text{(old)}-\alpha\cdot\nabla L = \left(\begin{array}{cc}
+    0.2 & -0.3 \\ 0.3 & -0.2
+\end{array}\right)$
+
