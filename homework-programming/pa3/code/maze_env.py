@@ -9,8 +9,10 @@ import json
 
 import numpy as np
 
+# seed = 650723220
 seed = random.randint(0, 2147483647)
 random.seed(seed)
+
 
 UNIT = 100  # 迷宫中每个格子的像素大小
 MAZE_H = 5  # 迷宫的高度（格子数）
@@ -268,7 +270,7 @@ def update_q_table_with_sample(state: State, action: Action, sample: float):
 def update():
     """Update the maze"""
     # 更新图形化界面
-    for t in range(300):
+    for t in range(30):
         s = env.reset() # pylint: disable=possibly-used-before-assignment
         path_len = 0
 
