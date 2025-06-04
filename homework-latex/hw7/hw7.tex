@@ -1,0 +1,30 @@
+\section{Homework 7}
+
+\subsection{第一题}
+
+(1) $Q_1(A, ab)=R(A, ab, B)+\gamma V_1(B)=-8 + \gamma \cdot 4=-6$, $Q_1(B, ba)=2 +\gamma \cdot 4=4$, $Q_1(B, bc)=-2+\gamma \cdot 4=0$, $Q_1(C, ca) = 0.25(4 + \gamma \cdot 4) + 0.75(0 + \gamma \cdot 4) = 3$, $Q_1(C, cb) = 8 + \gamma \cdot 4 = 10$, 因此$V_2(A) = -6, V_2(B) = 4, V_2(C) = 10$, $\pi_2(ab|A) = 1, \pi_2(ba|B) = 1, \pi_2(cb|C) = 1$
+
+(2)
+
+更新状态A: $Q(A,ab)=-6$, $V_2(A)=-6$.
+
+更新状态B: $Q(B,ba)=2 + \gamma \cdot (-6) = -1$, $Q(B,bc) = 0$, 因此$V_2(B) = 0$.
+
+更新状态C: $Q(C, ca)=0.25(4 + \gamma \cdot (-6)) + 0.75(0 + \gamma \cdot 4)=1.75, Q(C,cb) = 8 + 0.5 \cdot 0 = 8$. 因此$V_2(C) = 8$. 由此可以确定$\pi_2'(ab|A)=1,\pi_2'(bc|B)=1,\pi_2'(cb|C)=1$.
+
+\subsection{第二题}
+
+(1) 状态价值Bellman方程为$v(s)=r_s+\displaystyle\sum_{s'}^{}p(s'|s)v(s')$, 代入图中概率得到\begin{equation*}
+    \left\{
+        \begin{array}{ll}
+            v(a) = 3 + \dfrac{1}{4}v(a) + \dfrac{3}{4}v(b) \\\\
+            v(b) = -3 + \dfrac{1}{2}v(a) + \dfrac{1}{2}\cdot0
+        \end{array}
+    \right.
+\end{equation*}
+
+解得$v(a)=2, v(b)=-2$.
+
+(2) 首次访问: $v(A)=\frac{1}{2}[(3+2-4+4-3)+(3-3)]=1$, $v(B)=\frac{1}{2}[(-4 + 4 - 3) + (-2 + 3 - 3)] = -2.5$
+
+每次访问: $v(A)=\frac{1}{4}[2 + (-1) + 1 + 0] = 0.5$, $v(B)=\frac{1}{4}(-3 + (-3) + (-2) + (-3)) = -2.75$
